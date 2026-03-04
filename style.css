@@ -1,86 +1,38 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
-    
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #4e73df, #1cc88a);
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
 }
 
-.login-container {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.login-container h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
+.card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+  transition: transform 0.3s ease;
 }
 
-.input-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+.card:hover {
+  transform: translateY(-5px);
 }
 
-.input-group label {
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #555;
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.input-group input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.input-group input:focus {
-    border-color: #4e73df;
-    outline: none;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    background: #4e73df;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #2e59d9;
-}
-
-.register {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.register a {
-    color: #4e73df;
-    text-decoration: none;
-}
-
-.register a:hover {
-    text-decoration: underline;
+.button:hover {
+  background-color: #333;
 }
