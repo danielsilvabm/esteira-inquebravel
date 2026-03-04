@@ -1,27 +1,26 @@
-name: Esteira Inquebrável
+name: CI + Deploy GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
 
   validar-html:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar htmlhint
-        run: npm install -g htmlhint
+      - run: npm install -g htmlhint
 
       - name: Validar HTML
         run: htmlhint "**/*.html"
@@ -29,21 +28,16 @@ jobs:
 
   validar-css:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar stylelint
-        run: npm install -g stylelint stylelint-config-standard
+      - run: npm install -g stylelint stylelint-config-standard
 
-      - name: Criar config do stylelint
-        run: echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+      - run: echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
 
       - name: Validar CSS
         run: stylelint "**/*.css"
@@ -54,11 +48,27 @@ jobs:
     needs: [validar-html, validar-css]
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Criar pasta dist
-        run: mkdir dist
+        run: |
+          mkdir dist
+          cp -r *.html *.css dist/
 
-      - name: Copiar arquivos
-        run: cp -r *.html *.css dist/ || true
+      - name: Upload artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+
+  deploy:
+    needs: preparar-entrega
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy para GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
